@@ -53,7 +53,7 @@ class Eurovat
   end
 
   def self.country=(val)
-    @@country = country
+    class_variable_set(:@@country, val)
   end
 
   def self.must_charge_vat?(customer_country, vat_number)

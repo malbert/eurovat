@@ -28,6 +28,14 @@ describe Eurovat do
     Eurovat.must_charge_vat?('Netherlands', 'NL819225642B01').should be_truthy
   end
 
+  it "always charges VAT if the customer is from one's own country - Belgium" do
+    Eurovat.country= 'Belgium'
+    Eurovat.must_charge_vat?('Belgium', nil).should be_truthy
+    expect(Eurovat.country).to eq 'Belgium'
+    Eurovat.must_charge_vat?('Belgium', 'BE0829071668').should be_truthy
+  end
+
+
   it "doesn't charge VAT if the customer is outside one's own country and supplied a VAT number" do
     Eurovat.must_charge_vat?('Germany', 'NL819225642B01').should be_falsey
     Eurovat.must_charge_vat?('United States', 'NL819225642B01').should be_falsey
